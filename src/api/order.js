@@ -1,0 +1,40 @@
+import request from '@/utils/request'
+
+// 订单结算确认
+// mode: cart     => obj { cartIds }
+// mode: buyNow   => obj { goodsId goodsNum goodsSkuId }
+export const checkOrder = (mode, obj) => {
+  return request.get('checkout/order', {
+    params: {
+      mode,
+      delivery: 10,
+      couponId: 0,
+      isUsePoints: 0,
+      ...obj
+    }
+  })
+}
+
+// 订单提交
+// mode: cart     => obj { cartIds, remark }
+// mode: buyNow   => obj { goodsId, goodsNum, goodsSkuId, remark }
+export const submitOrder = (mode, obj) => {
+  return request.post('checkout/submit', {
+    mode,
+    delivery: 10,
+    couponId: 0,
+    isUsePoints: 0,
+    payType: 10,
+    ...obj
+  })
+}
+
+// 订单列表
+export const getMyOrderList = (dataType, page) => {
+  return request.get('order/list', {
+    params: {
+      dataType,
+      page
+    }
+  })
+}
